@@ -1,17 +1,18 @@
 package tacos
 
-class TacoOrder {
-    lateinit var deliveryName: String
-    lateinit var deliveryStreet: String
-    lateinit var deliveryCity: String
-    lateinit var deliveryState: String
-    lateinit var deliveryZip: String
+class TacoOrder(
+    var deliveryName: String = "",
+    var deliveryStreet: String = "",
+    var deliveryCity: String = "",
+    var deliveryState: String = "",
+    var deliveryZip: String = "",
 
-    lateinit var ccNumber: String
-    lateinit var ccExpiration: String
-    lateinit var ccCVV: String
+    var ccNumber: String = "",
+    var ccExpiration: String = "",
+    var ccCVV: String = "",
 
-    private val tacos: MutableList<Taco> = mutableListOf()
+    val tacos: MutableList<Taco> = mutableListOf(),
+) {
 
     fun addTaco(taco: Taco) {
         tacos.add(taco)
