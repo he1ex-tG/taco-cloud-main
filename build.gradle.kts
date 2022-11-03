@@ -24,6 +24,7 @@ dependencies {
     implementation("org.projectlombok:lombok:1.18.22")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 }
 
 tasks.withType<KotlinCompile> {

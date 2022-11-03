@@ -1,15 +1,10 @@
 package tacos
 
-class Ingredient() {
-    lateinit var id: String
-    lateinit var name: String
-    lateinit var type: Type
-
-    constructor(id: String, name: String, type: Type) : this() {
-        this.id = id
-        this.name = name
-        this.type = type
-    }
+data class Ingredient(
+    val id: String,
+    val name: String,
+    val type: Type,
+) {
 
     enum class Type {
         WRAP,
