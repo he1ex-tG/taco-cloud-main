@@ -25,6 +25,9 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+
+	implementation("org.springframework.boot:spring-boot-starter-jdbc")
+	implementation("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {

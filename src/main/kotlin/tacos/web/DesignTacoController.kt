@@ -2,6 +2,7 @@ package tacos.web
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.Errors
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes
 import tacos.Ingredient
 import tacos.Taco
 import tacos.TacoOrder
+import tacos.data.IngredientRepository
 import java.util.stream.Collectors
 import javax.validation.Valid
 
@@ -21,25 +23,16 @@ import javax.validation.Valid
 @SessionAttributes("tacoOrder")
 class DesignTacoController {
 
+    @Autowired
+    lateinit var ingredientRepository: IngredientRepository
+
     companion object {
         private val log: Logger = LoggerFactory.getLogger(this::class.java)
     }
 
     @ModelAttribute
     fun addIngredientsToModel(model: Model) {
-        val ingredients: List<Ingredient> = listOf(
-            Ingredient("FLTO", "Flour Tortilla", Ingredient.Type.WRAP),
-            Ingredient("COTO", "Corn Tortilla", Ingredient.Type.WRAP),
-            Ingredient("GRBF", "Ground Beef", Ingredient.Type.PROTEIN),
-            Ingredient("CARN", "Carnitas", Ingredient.Type.PROTEIN),
-            Ingredient("TMTO", "Diced Tomatoes", Ingredient.Type.VEGGIES),
-            Ingredient("LETC", "Lettuce", Ingredient.Type.VEGGIES),
-            Ingredient("CHED", "Cheddar", Ingredient.Type.CHEESE),
-            Ingredient("JACK", "Monterrey Jack", Ingredient.Type.CHEESE),
-            Ingredient("SLSA", "Salsa", Ingredient.Type.SAUCE),
-            Ingredient("SRCR", "Sour Cream", Ingredient.Type.SAUCE),
-        )
-
+        val ingredients: Iterable<Ingredient> = ingredientRepository.findAll()
         val types = Ingredient.Type.values()
         for (type in types) {
             model.addAttribute(type.toString().lowercase(), filterByType(ingredients, type))
@@ -61,8 +54,8 @@ class DesignTacoController {
         return "design"
     }
 
-    private fun filterByType(ingredients: List<Ingredient>, type: Ingredient.Type): Iterable<Ingredient> {
-        return ingredients
+    private fun filterByType(ingredients: Iterable<Ingredient>, type: Ingredient.Type): Iterable<Ingredient> {
+        return ingredients.toList()
             .stream()
             .filter { it.type == type }
             .collect(Collectors.toList())

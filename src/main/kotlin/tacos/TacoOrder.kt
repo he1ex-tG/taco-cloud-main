@@ -1,11 +1,18 @@
 package tacos
 
 import org.hibernate.validator.constraints.CreditCardNumber
+import java.io.Serializable
+import java.time.LocalDateTime
 import javax.validation.constraints.Digits
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
 
-class TacoOrder {
+class TacoOrder : Serializable {
+
+    val serialVersionUID: Long = 1L
+    var id: Long? = null
+    var placedAt: LocalDateTime = LocalDateTime.now()
+
     @NotBlank(message = "Delivery name is required")
     var deliveryName: String = ""
     @NotBlank(message = "Street is required")
