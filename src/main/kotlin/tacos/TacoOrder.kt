@@ -6,6 +6,7 @@ import java.time.LocalDateTime
 import javax.validation.constraints.Digits
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
+import javax.validation.constraints.Size
 
 class TacoOrder : Serializable {
 
@@ -20,11 +21,12 @@ class TacoOrder : Serializable {
     @NotBlank(message = "City is required")
     var deliveryCity: String = ""
     @NotBlank(message = "State is required")
+    @Size(min = 2, max = 2, message = "State length must be 2")
     var deliveryState: String = ""
     @NotBlank(message = "Zip code is required")
     var deliveryZip: String = ""
 
-    @CreditCardNumber(message = "Not a valid credit card number")
+    //@CreditCardNumber(message = "Not a valid credit card number")
     var ccNumber: String = ""
     @Pattern(regexp = "^(0[1-9]|1[0-2])([\\/])([2-9][0-9])$",
         message = "Must be formatted MM/YY")
