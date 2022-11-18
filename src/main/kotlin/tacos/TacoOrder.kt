@@ -1,6 +1,9 @@
 package tacos
 
 import org.hibernate.validator.constraints.CreditCardNumber
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.MappedCollection
+import org.springframework.data.relational.core.mapping.Table
 import java.io.Serializable
 import java.time.LocalDateTime
 import javax.validation.constraints.Digits
@@ -8,10 +11,15 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
+@Table
 class TacoOrder : Serializable {
 
-    val serialVersionUID: Long = 1L
-    var id: Long? = null
+    companion object {
+        private const val serialVersionUID: Long = 1L
+    }
+
+    @Id
+    private var id: Long? = null
     var placedAt: LocalDateTime = LocalDateTime.now()
 
     @NotBlank(message = "Delivery name is required")
@@ -34,6 +42,7 @@ class TacoOrder : Serializable {
     @Digits(integer = 3, fraction = 0, message = "Invalid CVV")
     var ccCVV: String = ""
 
+    @MappedCollection(idColumn = "TACO_ORDER")
     val tacos: MutableList<Taco> = mutableListOf()
 
     fun addTaco(taco: Taco) {

@@ -1,12 +1,16 @@
 package tacos
 
 import org.jetbrains.annotations.NotNull
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
 import javax.validation.constraints.Size
 
+@Table
 class Taco {
 
-    var id: Long? = null
+    @Id
+    private var id: Long? = null
     var createdAt: LocalDateTime = LocalDateTime.now()
 
     @NotNull
@@ -15,5 +19,5 @@ class Taco {
 
     @NotNull
     @Size(min = 1, message = "You must choose at least 1 ingredient")
-    var ingredients: List<Ingredient>? = null
+    var ingredients: List<IngredientRef>? = null
 }
