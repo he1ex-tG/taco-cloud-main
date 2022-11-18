@@ -1,10 +1,7 @@
 package tacos.data
 
+import org.springframework.data.repository.CrudRepository
 import tacos.Ingredient
 import java.util.Optional
 
-interface IngredientRepository {
-    fun findAll(): Iterable<Ingredient>
-    fun findById(id: String): Optional<Ingredient>
-    fun save(ingredient: Ingredient): Ingredient
-}
+interface IngredientRepository : CrudRepository<Ingredient, String>
