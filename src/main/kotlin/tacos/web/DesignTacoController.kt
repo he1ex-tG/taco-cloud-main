@@ -73,12 +73,6 @@ class DesignTacoController {
         }
 
         tacoOrder.addTaco(taco)
-
-        log.info("Processing taco: $taco")
-        taco.ingredients?.forEach {
-            log.info("Ingredient in processed taco: ${it.ingredient}")
-        }
-
         return "redirect:/orders/current"
     }
 }
