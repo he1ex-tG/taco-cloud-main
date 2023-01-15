@@ -1,8 +1,12 @@
 package tacos.data
 
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.CrudRepository
 import tacos.TacoOrder
 
-interface OrderRepository {
+interface OrderRepository : CrudRepository<TacoOrder, Long> {
 
-    fun save(order: TacoOrder): TacoOrder
+    // Example
+    @Query("select max(id) from TacoOrder")
+    fun findMaxTacoOrderId(): Long?
 }

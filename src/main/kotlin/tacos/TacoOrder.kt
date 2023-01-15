@@ -3,14 +3,22 @@ package tacos
 import org.hibernate.validator.constraints.CreditCardNumber
 import java.io.Serializable
 import java.time.LocalDateTime
+import javax.persistence.CascadeType
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.OneToMany
 import javax.validation.constraints.Digits
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
+@Entity
 class TacoOrder : Serializable {
 
-    val serialVersionUID: Long = 1L
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long? = null
     var placedAt: LocalDateTime = LocalDateTime.now()
 
@@ -33,7 +41,7 @@ class TacoOrder : Serializable {
     var ccExpiration: String = ""
     @Digits(integer = 3, fraction = 0, message = "Invalid CVV")
     var ccCVV: String = ""
-
+    @OneToMany(cascade = [CascadeType.ALL])
     val tacos: MutableList<Taco> = mutableListOf()
 
     fun addTaco(taco: Taco) {

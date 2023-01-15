@@ -1,6 +1,11 @@
 package tacos
 
-data class Ingredient(
+import javax.persistence.Entity
+import javax.persistence.Id
+
+@Entity
+class Ingredient(
+    @Id
     val id: String,
     val name: String,
     val type: Type,
