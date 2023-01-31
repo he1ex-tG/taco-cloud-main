@@ -10,7 +10,6 @@ data class Ingredient(
     val name: String,
     val type: Type,
 ) {
-
     enum class Type {
         WRAP,
         PROTEIN,

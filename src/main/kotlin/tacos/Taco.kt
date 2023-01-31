@@ -6,7 +6,7 @@ import javax.validation.constraints.Size
 
 class Taco {
 
-    var id: Long? = null
+    private var id: Long? = null
     var createdAt: LocalDateTime = LocalDateTime.now()
 
     @NotNull
