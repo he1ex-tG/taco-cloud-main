@@ -1,6 +1,8 @@
 package tacos
 
 import org.hibernate.validator.constraints.CreditCardNumber
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
 import java.io.Serializable
 import java.time.LocalDateTime
 import javax.validation.constraints.Digits
@@ -8,10 +10,13 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
+@Document
 class TacoOrder : Serializable {
 
     val serialVersionUID: Long = 1L
-    var id: Long? = null
+
+    @Id
+    var id: String? = null
     var placedAt: LocalDateTime = LocalDateTime.now()
 
     @NotBlank(message = "Delivery name is required")
