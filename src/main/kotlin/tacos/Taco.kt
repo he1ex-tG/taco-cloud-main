@@ -22,5 +22,5 @@ class Taco {
     @NotNull
     @Size(min = 1, message = "You must choose at least 1 ingredient")
     @ManyToMany
-    var ingredients: List<Ingredient>? = null
+    var ingredients: MutableList<Ingredient>? = null
 }
