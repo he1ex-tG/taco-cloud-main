@@ -1,4 +1,8 @@
 spring:
-  datasource:
-    generate-unique-name: false
-    name: tacocloud
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+  mongodb:
+    embedded:
+      version: 4.4.0
