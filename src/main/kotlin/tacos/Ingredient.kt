@@ -1,30 +1,20 @@
 package tacos
 
 import org.springframework.data.annotation.Id
-import org.springframework.data.domain.Persistable
-import org.springframework.data.relational.core.mapping.Table
+import org.springframework.data.mongodb.core.mapping.Document
 
-@Table
-class Ingredient : Persistable<String> {
-
+@Document
+data class Ingredient(
     @Id
-    private var id: String? = null
-    var name: String? = null
-    var type: Type? = null
-
+    val id: String,
+    val name: String,
+    val type: Type,
+) {
     enum class Type {
         WRAP,
         PROTEIN,
         VEGGIES,
         CHEESE,
         SAUCE,
-    }
-
-    override fun getId(): String? {
-        return id
-    }
-
-    override fun isNew(): Boolean {
-        return id == null
     }
 }

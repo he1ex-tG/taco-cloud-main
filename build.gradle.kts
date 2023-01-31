@@ -26,8 +26,8 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 
-	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
-	implementation("com.h2database:h2")
+	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
 }
 
 tasks.withType<KotlinCompile> {
