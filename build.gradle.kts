@@ -28,6 +28,8 @@ dependencies {
 
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 	implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
+
+	implementation("org.springframework.boot:spring-boot-starter-security")
 }
 
 tasks.withType<KotlinCompile> {
