@@ -29,6 +29,10 @@ class SecurityConfig {
             .logout()
                 .logoutSuccessUrl("/login")
             .and()
+            .oauth2Login()
+                .loginPage("/login")
+                .defaultSuccessUrl("/design", true)
+            .and()
             .build()
     }
 
