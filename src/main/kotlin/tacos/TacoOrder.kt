@@ -41,6 +41,8 @@ class TacoOrder : Serializable {
 
     val tacos: MutableList<Taco> = mutableListOf()
 
+    var user: User? = null
+
     fun addTaco(taco: Taco) {
         tacos.add(taco)
     }

@@ -3,6 +3,8 @@ package tacos.web
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
 import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.GetMapping
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.SessionAttributes
 import org.springframework.web.bind.support.SessionStatus
 import tacos.TacoOrder
+import tacos.User
 import tacos.data.OrderRepository
 import javax.validation.Valid
 
@@ -35,13 +38,15 @@ class OrderController {
     fun processOrder(
         @Valid order: TacoOrder,
         errors: Errors,
-        sessionStatus: SessionStatus
+        sessionStatus: SessionStatus,
+        //@AuthenticationPrincipal user: User
     ): String {
 
         if (errors.hasErrors()) {
             return "orderForm"
         }
 
+        //order.user = user
         orderRepository.save(order)
 
         sessionStatus.setComplete()
