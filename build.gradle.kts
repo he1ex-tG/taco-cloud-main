@@ -30,6 +30,7 @@ dependencies {
 	implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
 
 	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 }
 
 tasks.withType<KotlinCompile> {
