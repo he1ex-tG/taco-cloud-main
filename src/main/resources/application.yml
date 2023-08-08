@@ -15,3 +15,6 @@ logging:
     org.springframework.security: DEBUG
   file:
     name: TacoCloud.log
+taco:
+  orders:
+    pageSize: 5
