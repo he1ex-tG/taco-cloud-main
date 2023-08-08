@@ -19,7 +19,7 @@ class SecurityConfig {
             .csrf()
                 .disable()
             .authorizeRequests()
-                .antMatchers("/design", "/orders").hasRole("USER")
+                .antMatchers("/design/**", "/orders/**").hasRole("USER")
                 .antMatchers("/", "/**").permitAll()
             .and()
             .formLogin()

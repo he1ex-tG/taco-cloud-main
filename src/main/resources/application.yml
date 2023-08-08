@@ -9,3 +9,9 @@ spring:
   mongodb:
     embedded:
       version: 4.4.0
+logging:
+  level:
+    root: WARN
+    org.springframework.security: DEBUG
+  file:
+    name: TacoCloud.log

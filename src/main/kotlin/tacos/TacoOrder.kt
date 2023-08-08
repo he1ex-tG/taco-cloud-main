@@ -2,6 +2,7 @@ package tacos
 
 import org.hibernate.validator.constraints.CreditCardNumber
 import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.Transient
 import org.springframework.data.mongodb.core.mapping.Document
 import java.io.Serializable
 import java.time.LocalDateTime
@@ -13,6 +14,7 @@ import javax.validation.constraints.Size
 @Document
 class TacoOrder : Serializable {
 
+    @Transient
     val serialVersionUID: Long = 1L
 
     @Id
@@ -39,11 +41,7 @@ class TacoOrder : Serializable {
     @Digits(integer = 3, fraction = 0, message = "Invalid CVV")
     var ccCVV: String = ""
 
-    val tacos: MutableList<Taco> = mutableListOf()
+    var tacos: MutableList<Taco>? = null
 
     var user: User? = null
-
-    fun addTaco(taco: Taco) {
-        tacos.add(taco)
-    }
 }

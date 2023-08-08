@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
 import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -29,6 +30,18 @@ class OrderController {
         private val log: Logger = LoggerFactory.getLogger(this::class.java)
     }
 
+    @GetMapping
+    fun ordersForUser(@AuthenticationPrincipal user: User, model: Model): String {
+        val ddd = orderRepository.findAll()
+        //val ddd = orderRepository.findByUserOrderByPlacedAtDesc(user)
+        model.addAttribute(
+            "orders",
+            ddd
+        )
+
+        return "orderList"
+    }
+
     @GetMapping("/current")
     fun orderForm(): String {
         return "orderForm"
@@ -39,14 +52,14 @@ class OrderController {
         @Valid order: TacoOrder,
         errors: Errors,
         sessionStatus: SessionStatus,
-        //@AuthenticationPrincipal user: User
+        @AuthenticationPrincipal user: User
     ): String {
 
         if (errors.hasErrors()) {
             return "orderForm"
         }
 
-        //order.user = user
+        order.user = user
         orderRepository.save(order)
 
         sessionStatus.setComplete()

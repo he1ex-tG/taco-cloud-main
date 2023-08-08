@@ -76,7 +76,11 @@ class DesignTacoController {
             return "design"
         }
 
-        tacoOrder.addTaco(taco)
+        if (tacoOrder.tacos == null) {
+            tacoOrder.tacos = mutableListOf()
+        }
+        tacoOrder.tacos!!.add(taco)
+
         return "redirect:/orders/current"
     }
 }
