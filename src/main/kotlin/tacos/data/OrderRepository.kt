@@ -8,4 +8,5 @@ import tacos.User
 interface OrderRepository : CrudRepository<TacoOrder, String> {
 
     fun findByUserOrderByPlacedAtDesc(user: User, pageable: Pageable): List<TacoOrder>
+    fun findAll(pageable: Pageable): List<TacoOrder>
 }

@@ -1,6 +1,5 @@
-package tacos.data.fullfill
+package tacos.data.repo_defaults
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -8,13 +7,12 @@ import tacos.Ingredient
 import tacos.data.IngredientRepository
 
 @Configuration
-class IngredientFullFill {
-
-    @Autowired
-    lateinit var ingredientRepository: IngredientRepository
+class IngredientData(
+    val ingredientRepository: IngredientRepository
+) {
 
     @Bean
-    fun ingredientRepositoryFullFill(): CommandLineRunner {
+    fun ingredientDefaults(): CommandLineRunner {
         return CommandLineRunner {
             ingredientRepository.apply {
                 save(Ingredient("FLTO", "Flour Tortilla", Ingredient.Type.WRAP))
