@@ -6,6 +6,8 @@ spring:
     mongodb:
       host: localhost
       port: 27017
+    rest:
+      base-path: /data-api
   mongodb:
     embedded:
       version: 4.4.0
