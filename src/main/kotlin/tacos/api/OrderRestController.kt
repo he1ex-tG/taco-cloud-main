@@ -1,4 +1,4 @@
-package tacos.web.api
+package tacos.api
 
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.data.domain.PageRequest
