@@ -2,6 +2,7 @@ package tacos.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -20,6 +21,10 @@ class SecurityConfig {
                 .disable()
             .authorizeRequests()
                 .antMatchers("/design/**", "/orders/**").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/api/ingredients/**")
+                    .hasAuthority("SCOPE_writeIngredients")
+                .antMatchers(HttpMethod.DELETE, "/api/ingredients/**")
+                    .hasAuthority("SCOPE_deleteIngredients")
                 .antMatchers("/", "/**").permitAll()
             .and()
             .formLogin()
@@ -33,6 +38,9 @@ class SecurityConfig {
                 .loginPage("/login")
                 .defaultSuccessUrl("/design", true)
             .and()
+            .oauth2ResourceServer {
+                it.jwt()
+            }
             .build()
     }
 

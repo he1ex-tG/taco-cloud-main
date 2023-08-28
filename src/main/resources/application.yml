@@ -2,6 +2,11 @@ spring:
   profiles:
     include:
       - secrets
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9000/oauth2/jwks
   data:
     mongodb:
       host: localhost

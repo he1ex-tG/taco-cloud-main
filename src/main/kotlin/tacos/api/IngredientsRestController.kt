@@ -15,7 +15,7 @@ import tacos.data.IngredientRepository
 
 @RestController
 @RequestMapping(path = ["/api/ingredients"], produces = ["application/json"])
-@CrossOrigin(origins = ["http://localhost:8080"])
+@CrossOrigin(origins = ["http://tacocloud:8080"])
 class IngredientsRestController(
     private val ingredientRepository: IngredientRepository
 ) {
