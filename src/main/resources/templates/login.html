@@ -18,7 +18,12 @@
         <input type="submit" value="Login">
     </form>
     <div id="oauth2authorization">
-        <a th:href="@{/oauth2/authorization/github}">Sing in with GitHub</a>
+        <div>
+            <a th:href="@{/oauth2/authorization/github}">Sing in with GitHub</a>
+        </div>
+        <div>
+            <a th:href="@{/oauth2/authorization/taco-main}">Sing in with TacoAuth</a>
+        </div>
     </div>
 </body>
 </html>

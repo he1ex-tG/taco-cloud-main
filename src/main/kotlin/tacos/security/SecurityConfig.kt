@@ -3,7 +3,10 @@ package tacos.security
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
+import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.web.servlet.invoke
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -12,36 +15,39 @@ import org.springframework.security.web.SecurityFilterChain
 import tacos.data.UserRepository
 
 @Configuration
+@EnableWebSecurity
 class SecurityConfig {
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        return http
-            .csrf()
-                .disable()
-            .authorizeRequests()
-                .antMatchers("/design/**", "/orders/**").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "/api/ingredients/**")
-                    .hasAuthority("SCOPE_writeIngredients")
-                .antMatchers(HttpMethod.DELETE, "/api/ingredients/**")
-                    .hasAuthority("SCOPE_deleteIngredients")
-                .antMatchers("/", "/**").permitAll()
-            .and()
-            .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/design", true)
-            .and()
-            .logout()
-                .logoutSuccessUrl("/login")
-            .and()
-            .oauth2Login()
-                .loginPage("/login")
-                .defaultSuccessUrl("/design", true)
-            .and()
-            .oauth2ResourceServer {
-                it.jwt()
+        http.invoke {
+            csrf {
+                disable()
             }
-            .build()
+            authorizeRequests {
+                //authorize("/design/**", hasRole("USER"))
+                authorize("/design/**", hasAuthority("SCOPE_tacoMain"))
+                authorize("/orders/**", hasRole("USER"))
+                authorize(HttpMethod.POST, "/api/ingredients/**", hasAuthority("SCOPE_writeIngredients"))
+                authorize(HttpMethod.DELETE, "/api/ingredients/**", hasAuthority("SCOPE_deleteIngredients"))
+                authorize("/", permitAll)
+                authorize("/**", permitAll)
+            }
+            formLogin {
+                loginPage = "/login"
+                defaultSuccessUrl("/design", true)
+            }
+            logout {
+                logoutSuccessUrl = "/login"
+            }
+            oauth2Login {
+            }
+            oauth2ResourceServer {
+                jwt {
+                }
+            }
+        }
+        return http.build()
     }
 
     @Bean
