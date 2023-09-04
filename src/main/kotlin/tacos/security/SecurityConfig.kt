@@ -21,13 +21,11 @@ class SecurityConfig {
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.invoke {
-            csrf {
-                disable()
-            }
             authorizeRequests {
                 //authorize("/design/**", hasRole("USER"))
                 authorize("/design/**", hasAuthority("SCOPE_tacoMain"))
-                authorize("/orders/**", hasRole("USER"))
+                //authorize("/orders/**", hasRole("USER"))
+                authorize("/orders/**", hasAuthority("SCOPE_tacoMain"))
                 authorize(HttpMethod.POST, "/api/ingredients/**", hasAuthority("SCOPE_writeIngredients"))
                 authorize(HttpMethod.DELETE, "/api/ingredients/**", hasAuthority("SCOPE_deleteIngredients"))
                 authorize("/", permitAll)
@@ -41,11 +39,9 @@ class SecurityConfig {
                 logoutSuccessUrl = "/login"
             }
             oauth2Login {
+                loginPage = "/login"
             }
-            oauth2ResourceServer {
-                jwt {
-                }
-            }
+
         }
         return http.build()
     }

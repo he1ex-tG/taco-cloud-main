@@ -4,6 +4,24 @@ spring:
       - secrets
   security:
     oauth2:
+      client:
+        provider:
+          tacocloud:
+            authorizationUri: http://authserver:9000/oauth2/authorize
+            tokenUri: http://authserver:9000/oauth2/token
+            userInfoUri: http://authserver:9000/userinfo
+            jwkSetUri: http://authserver:9000/oauth2/jwks
+            userNameAttribute: sub
+        registration:
+          taco-main:
+            provider: tacocloud
+            clientId: taco-main
+            clientSecret: secret
+            authorizationGrantType: authorization_code
+            redirectUri: "http://localhost:8080/login/oauth2/code/taco-main"
+            scope:
+              - tacoMain
+              - openid
       resourceserver:
         jwt:
           jwk-set-uri: http://authserver:9000/oauth2/jwks
