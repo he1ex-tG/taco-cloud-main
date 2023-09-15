@@ -2,12 +2,8 @@ package tacos.web
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
-import org.springframework.security.core.Authentication
-import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.Errors
@@ -16,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.SessionAttributes
 import org.springframework.web.bind.support.SessionStatus
-import tacos.TacoOrder
-import tacos.User
-import tacos.data.OrderRepository
-import tacos.data.configuration.OrderProps
+import tacos.data.entity.TacoOrder
+import tacos.data.repository.OrderRepository
+import tacos.data.configuration.OrderProperties
+import java.security.Principal
 import javax.validation.Valid
 
 @Controller
@@ -27,7 +23,7 @@ import javax.validation.Valid
 @SessionAttributes("tacoOrder")
 class OrderController(
     val orderRepository: OrderRepository,
-    val orderProps: OrderProps
+    val orderProps: OrderProperties
 ) {
 
     companion object {
@@ -36,11 +32,11 @@ class OrderController(
 
     @GetMapping
     fun ordersForUser(
-        @AuthenticationPrincipal user: User,
+        principal: Principal,
         model: Model
     ): String {
         val pageable: Pageable = PageRequest.of(0, orderProps.pageSize)
-        val ordersListByUser = orderRepository.findByUserOrderByPlacedAtDesc(user, pageable)
+        val ordersListByUser = orderRepository.findByUserOrderByPlacedAtDesc(principal.name, pageable)
         model.addAttribute("orders", ordersListByUser)
 
         return "orderList"
@@ -56,14 +52,14 @@ class OrderController(
         @Valid order: TacoOrder,
         errors: Errors,
         sessionStatus: SessionStatus,
-        @AuthenticationPrincipal user: User
+        principal: Principal
     ): String {
 
         if (errors.hasErrors()) {
             return "orderForm"
         }
 
-        order.user = user
+        order.user = principal.name
         orderRepository.save(order)
 
         sessionStatus.setComplete()

@@ -9,6 +9,5 @@ class WebConfig : WebMvcConfigurer {
 
     override fun addViewControllers(registry: ViewControllerRegistry) {
         registry.addViewController("/").setViewName("home")
-        registry.addViewController("/login")
     }
 }
