@@ -1,6 +1,5 @@
-package tacos
+package tacos.data.entity
 
-import org.hibernate.validator.constraints.CreditCardNumber
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Transient
 import org.springframework.data.mongodb.core.mapping.Document
@@ -43,5 +42,5 @@ class TacoOrder : Serializable {
 
     var tacos: MutableList<Taco>? = null
 
-    var user: User? = null
+    var user: String? = null
 }

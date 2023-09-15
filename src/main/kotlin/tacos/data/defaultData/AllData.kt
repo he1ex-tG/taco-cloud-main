@@ -1,26 +1,22 @@
-package tacos.data.repo_defaults
+package tacos.data.defaultData
 
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import tacos.Ingredient
-import tacos.Taco
-import tacos.TacoOrder
-import tacos.User
-import tacos.data.OrderRepository
-import tacos.data.UserRepository
+import tacos.data.entity.Ingredient
+import tacos.data.entity.Taco
+import tacos.data.entity.TacoOrder
+import tacos.data.repository.OrderRepository
 
 @Configuration
 class AllData(
-    private val orderRepository: OrderRepository,
-    private val userRepository: UserRepository
+    private val orderRepository: OrderRepository
 ) {
 
     @Bean
     fun allDataDefaults(): CommandLineRunner {
         return CommandLineRunner {
-            val mainUser = User("htG", "\$2a\$10\$As4Hq3nL2eo/XKQyPeI3euTgnfSliQnyMjchnWAX7Rpf.gVJ1Rw6S")
-            userRepository.save(mainUser)
+            val mainUser = "user"
 
             val taco1 = Taco().apply {
                 name = "Taco1"

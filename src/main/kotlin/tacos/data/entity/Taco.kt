@@ -1,8 +1,6 @@
-package tacos
+package tacos.data.entity
 
 import org.jetbrains.annotations.NotNull
-import org.springframework.data.annotation.Id
-import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 import javax.validation.constraints.Size
 

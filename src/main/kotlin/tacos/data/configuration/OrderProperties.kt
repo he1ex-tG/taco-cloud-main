@@ -9,7 +9,7 @@ import javax.validation.constraints.Min
 @Configuration
 @ConfigurationProperties(prefix = "taco.orders")
 @Validated
-class OrderProps {
+class OrderProperties {
     @field:Min(value = 5, message = "Must be between 5 and 25")
     @field:Max(value = 25, message = "Must be between 5 and 25")
     var pageSize = 10

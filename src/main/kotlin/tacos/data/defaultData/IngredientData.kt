@@ -1,10 +1,10 @@
-package tacos.data.repo_defaults
+package tacos.data.defaultData
 
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import tacos.Ingredient
-import tacos.data.IngredientRepository
+import tacos.data.entity.Ingredient
+import tacos.data.repository.IngredientRepository
 
 @Configuration
 class IngredientData(
