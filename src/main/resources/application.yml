@@ -2,6 +2,11 @@ spring:
   profiles:
     include:
       - secret
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://authserver:9000/oauth2/v1/jwks
   data:
     mongodb:
       host: localhost
@@ -13,7 +18,7 @@ spring:
       version: 4.4.0
 logging:
   level:
-    root: WARN
+    root: warn
     org.springframework.security: DEBUG
   file:
     name: TacoCloud.log
