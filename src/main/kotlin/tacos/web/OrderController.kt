@@ -4,6 +4,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.Errors
@@ -12,10 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.SessionAttributes
 import org.springframework.web.bind.support.SessionStatus
+import tacos.data.configuration.OrderProperties
 import tacos.data.entity.TacoOrder
 import tacos.data.repository.OrderRepository
-import tacos.data.configuration.OrderProperties
-import java.security.Principal
 import javax.validation.Valid
 
 @Controller
@@ -32,11 +32,11 @@ class OrderController(
 
     @GetMapping
     fun ordersForUser(
-        principal: Principal,
         model: Model
     ): String {
         val pageable: Pageable = PageRequest.of(0, orderProps.pageSize)
-        val ordersListByUser = orderRepository.findByUserOrderByPlacedAtDesc(principal.name, pageable)
+        val user = SecurityContextHolder.getContext().authentication.name
+        val ordersListByUser = orderRepository.findByUserOrderByPlacedAtDesc(user, pageable)
         model.addAttribute("orders", ordersListByUser)
 
         return "orderList"
@@ -51,15 +51,16 @@ class OrderController(
     fun processOrder(
         @Valid order: TacoOrder,
         errors: Errors,
-        sessionStatus: SessionStatus,
-        principal: Principal
+        sessionStatus: SessionStatus
     ): String {
 
         if (errors.hasErrors()) {
             return "orderForm"
         }
 
-        order.user = principal.name
+        val user = SecurityContextHolder.getContext().authentication.name
+        order.user = user
+
         orderRepository.save(order)
 
         sessionStatus.setComplete()
